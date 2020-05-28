@@ -1,26 +1,7 @@
-components:
-  securitySchemes:
-    OAuth2:
-      type: oauth2
-      flows:
-        authorizationCode:
-          authorizationUrl: http://app.hisab.co/auth/authorize?response_type=token&client_id=hisab-webapp&redirect_uri=REDIRECT-URI
-          tokenUrl: http://app.hisab.co/oauth/token
-          scopes:
-            read: Grants read access
-            write: Grants write access
-            admin: Grants access to admin operations
-            ROLE_USER: Login user
-            COMPANY_ADMIN: Grants update company information
-            COMPANY_OWNER: Grants update company information
-            COMPANY_EDITOR: Grants update company information
-  schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        fields:
-          type: string
+companyId:
+   name: companyId
+   in: path
+   description: id of company
+   required: true
+      schema:
+        type: string
