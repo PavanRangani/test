@@ -1,35 +1,56 @@
 put:
-      tags:
-        - 'setup company db'
-      summary: "create database for given company"
-      description: "
-        - Create couchdb database for given company.
-        - Database name resolved by configured dbPattern and companyId. e.g. dbNamePattern=sale-c then db name will be sale-c-{companyId}"
-        
-      security:
-        - bearerAuth: []
+  tags:
+    - 'setup company db'
+  summary: "create database for given company"
+  description: "
+    - Create couchdb database for given company.
+    - Database name resolved by configured dbPattern and companyId. e.g. dbNamePattern=sale-c then db name will be sale-c-{companyId}"
+    
+  security:
+    - bearerAuth: []
 
-      parameters:
-        - name: companyId
-          in: path
-          description: id of company
-          required: true
+  parameters:
+    - name: companyId
+      in: path
+      description: id of company
+      required: true
+      schema:
+        type: string
+  responses:
+    204: 
+      description: "when successfully setup"
+    400:
+      description: When a companyId is not provided.
+      content:
+        application/json:
           schema:
-            type: string
-      responses:
-        204: 
-          description: "when successfully setup"
-        400:
-          description: When a companyId is not provided.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        308:
-          description: Given company is not found.
-        default:
-          description: unknown error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/Error'
+    308:
+      description: Given company is not found.
+    default:
+      description: unknown error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    
+
+################################################################################
+#                                 components                                  #
+################################################################################
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        fields:
+          type: string
